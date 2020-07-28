@@ -1,0 +1,69 @@
+From c9facc71961e8014b96e7159014cfdd884e92a82 Mon Sep 17 00:00:00 2001
+From: jonny rhea <jonathan.rhea@gmail.com>
+Date: Tue, 28 Jul 2020 12:59:50 -0500
+Subject: [PATCH] these changes were a 30 sec hack made to get the validator
+ code working on 32bit MIPS.  this is not perm
+
+---
+ proto/beacon/p2p/v1/generated.ssz.go | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/proto/beacon/p2p/v1/generated.ssz.go b/proto/beacon/p2p/v1/generated.ssz.go
+index 5004f0e81..ba3602224 100755
+--- a/proto/beacon/p2p/v1/generated.ssz.go
++++ b/proto/beacon/p2p/v1/generated.ssz.go
+@@ -3,7 +3,7 @@ package ethereum_beacon_p2p_v1
+ 
+ import (
+ 	"fmt"
+-
++	"math"
+ 	ssz "github.com/ferranbt/fastssz"
+ 	v1alpha1 "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1"
+ )
+@@ -186,7 +186,7 @@ func (b *BeaconState) MarshalSSZTo(dst []byte) ([]byte, error) {
+ 	}
+ 
+ 	// Field (11) 'Validators'
+-	if len(b.Validators) > 1099511627776 {
++	if uint32(len(b.Validators)) > uint32(math.MaxUint32) {
+ 		return nil, errMarshalList
+ 	}
+ 	for ii := 0; ii < len(b.Validators); ii++ {
+@@ -196,7 +196,7 @@ func (b *BeaconState) MarshalSSZTo(dst []byte) ([]byte, error) {
+ 	}
+ 
+ 	// Field (12) 'Balances'
+-	if len(b.Balances) > 1099511627776 {
++	if uint32(len(b.Balances)) > uint32(math.MaxUint32) {
+ 		return nil, errMarshalList
+ 	}
+ 	for ii := 0; ii < len(b.Balances); ii++ {
+@@ -412,7 +412,7 @@ func (b *BeaconState) UnmarshalSSZ(buf []byte) error {
+ 		if !ok {
+ 			return errDivideInt
+ 		}
+-		if num > 1099511627776 {
++		if uint32(num) > uint32(math.MaxUint32) {
+ 			return errListTooBig
+ 		}
+ 		b.Validators = make([]*v1alpha1.Validator, num)
+@@ -433,7 +433,7 @@ func (b *BeaconState) UnmarshalSSZ(buf []byte) error {
+ 		if !ok {
+ 			return errDivideInt
+ 		}
+-		if num > 1099511627776 {
++		if uint32(num) > uint32(math.MaxUint32) {
+ 			return errListTooBig
+ 		}
+ 		b.Balances = ssz.ExtendUint64(b.Balances, num)
+@@ -1054,4 +1054,4 @@ func (m *MetaData) UnmarshalSSZ(buf []byte) error {
+ func (m *MetaData) SizeSSZ() (size int) {
+ 	size = 16
+ 	return
+-}
++}
+\ No newline at end of file
+-- 
+2.21.1 (Apple Git-122.3)
+
