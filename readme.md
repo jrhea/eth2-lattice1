@@ -84,6 +84,26 @@ Note: I also added an entry to go.mod to force Prysm to look at the right herumi
 go mod edit -replace github.com/herumi/bls-eth-go-binary/bls=/root/work/bls-eth-go-binary
 ```
 
+**How to Run**
+
+1) copy the validator to the lattice1
+```sh
+scp validator root@lattice-c23c:/mnt/mmcblk0p1/
+```
+2) run prysm 
+```sh
+prysm.sh beacon-chain --verbosity info \
+--disable-discv5 \
+--interop-eth1data-votes \
+--interop-genesis-time $(date +%s) \
+--interop-num-validators 64 \
+--rpc-host $(ipconfig getifaddr en0)
+```
+3) run validator from `/mnt/mmcblk0p1/`
+```sh
+./validator --keymanager=interop --keymanageropts='{"keys":64}' --datadir $PWD --beacon-rpc-provider 192.168.1.212:4000 --force-clear-db
+```
+
 **Hacks**
 
 1)
