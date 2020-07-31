@@ -3,9 +3,11 @@
 This repo contains the dockerfile and associated resources needed to configure, cross compile and run an eth2 validator on the lattice1.
 
 ### Build the container
+
 ```
 docker build -t jrhea/lattice1 .
 ```
+> Note: This step will take a long time to complete
 
 ### Run contain and drop into a shell
 
