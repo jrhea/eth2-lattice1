@@ -39,5 +39,5 @@ prysm.sh beacon-chain --verbosity info \
 ### SSH into your Lattice1 and run the validator
 
 ```
-cd /mnt/mmcblk0p1 && ./validator --keymanager=interop --keymanageropts='{"keys":64}' --datadir $PWD --beacon-rpc-provider XXX.XXX.XXX.XXX:4000 --force-clear-db
+cd /mnt/mmcblk0p1 && ./validator --keymanager=interop --keymanageropts='{"keys":64}' --datadir $PWD --beacon-rpc-provider XXX.XXX.XXX.XXX:4000 --force-clear-db --disable-accounts-v2
 ```
