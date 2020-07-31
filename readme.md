@@ -4,7 +4,7 @@ This repo contains the dockerfile and associated resources needed to configure, 
 
 ### Build the container
 ```
-cd docker && docker build -t jrhea/lattice1 .
+docker build -t jrhea/lattice1 .
 ```
 
 ### Run contain and drop into a shell
@@ -18,6 +18,10 @@ docker run -it jrhea/lattice1 /bin/bash
 ```
 scp /root/work/prysm/validator/validator root@lattice-c23c:/mnt/mmcblk0p1/
 ```
+
+### Install Prysm
+
+Refer to the Prysm documentation [here](https://docs.prylabs.network/docs/install/install-with-script).
 
 ### Start Prysm from host machine
 
