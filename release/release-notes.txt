@@ -1,0 +1,40 @@
+Screech "release notes"
+
+**Herumi Mods**
+
+To build the Prsym validator, I had to make a couple of PRs to Herumi libraries.  For details review these links:
+
+- https://github.com/herumi/mcl/pull/82
+
+Note: the commit from this PR is already merged into MCL master
+
+- https://github.com/herumi/bls-eth-go-binary/pull/22
+
+Note: herumi modified the build process to fit with his workflow and already merged it into master.  I tested it and it works
+
+**Prysm Mods**
+
+I made a terrible hack to proto/beacon/p2p/v1/generated.ssz.go.  The patches dir in this repo contains a patch file with the mods, but this will need to be fixed properly.  Sorry! 
+
+
+**Run Validator**
+
+This is how I ran the validator and prsym.  There might be some issues with some of the options bc the validator has trouble communicating at first.  
+
+1) copy the validator to the lattice1
+
+scp validator root@lattice-c23c:/mnt/mmcblk0p1/
+
+2) run prysm 
+
+prysm.sh beacon-chain --verbosity info \
+--disable-discv5 \
+--interop-eth1data-votes \
+--interop-genesis-time $(date +%s) \
+--interop-num-validators 64 \
+--rpc-host $(ipconfig getifaddr en0)
+
+3) run validator from `/mnt/mmcblk0p1/`
+
+./validator --keymanager=interop --keymanageropts='{"keys":64}' --datadir $PWD --beacon-rpc-provider 192.168.1.212:4000 --force-clear-db
+
