@@ -28,12 +28,21 @@ Refer to the Prysm documentation [here](https://docs.prylabs.network/docs/instal
 ### Start Prysm from host machine
 
 ```
+CURRENT_TIME=$(date +%s)
+GENESIS_TIME=$((CURRENT_TIME + 90))
+IP_ADDRESS=XXX.XXX.XXX.XXX
+
 prysm.sh beacon-chain --verbosity info \
+--force-clear-db \
 --disable-discv5 \
 --interop-eth1data-votes \
---interop-genesis-time $(date +%s) \
+--interop-genesis-time $GENESIS_TIME \
 --interop-num-validators 64 \
---rpc-host $(ipconfig getifaddr en0)
+--rpc-host $IP_ADDRESS \
+--p2p-tcp-port 9000 \
+--p2p-udp-port 9000 \
+--deposit-contract 0x8A04d14125D0FDCDc742F4A05C051De07232EDa4
+
 ```
 
 ### SSH into your Lattice1 and run the validator
