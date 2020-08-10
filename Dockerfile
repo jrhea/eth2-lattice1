@@ -65,7 +65,7 @@ RUN cd /root/work/prysm \
 
 # Cross Compile Prysm Validator
 RUN cd /root/work/prysm/validator \
-&& env CC=mipsel-openwrt-linux-gcc CGO_ENABLED=1 GOOS=linux GOARCH=mipsle GOMIPS=softfloat CGO_LDFLAGS="-L/root/work/bls-eth-go-binary/bls/lib/linux/mipsle" CGO_LDLIBS="-lbls384_256" go build
+&& env CC=mipsel-openwrt-linux-gcc CGO_ENABLED=1 GOOS=linux GOARCH=mipsle GOMIPS=softfloat CGO_LDFLAGS="-s -L/root/work/bls-eth-go-binary/bls/lib/linux/mipsle" CGO_LDLIBS="-lbls384_256" go build
 
 
 
